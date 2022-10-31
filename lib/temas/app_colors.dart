@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 class AppColors {
-  static const primary = Color(0xFF00C853);
+  static const primary = Color.fromARGB(255, 0, 124, 240);
   static const secondary = Color(0xFF585666);
   static const grey = Color(0xFF585666);
   static const delete = Color(0xFFE83F5B);

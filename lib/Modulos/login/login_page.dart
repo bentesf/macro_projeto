@@ -23,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
     final size = MediaQuery.of(context).size;
     final ButtonStyle style = ElevatedButton.styleFrom(
       fixedSize: Size.infinite,
-      backgroundColor: Colors.green,
+      backgroundColor: Colors.blue,
     );
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -33,19 +33,19 @@ class _LoginPageState extends State<LoginPage> {
           height: size.height,
           child: Stack(
             children: [
-              Container(
-                width: size.width,
-                height: size.height * 0.36,
-                color: AppColors.primary,
-              ),
+              // Container(
+              //   width: size.width,
+              //   height: size.height * 0.36,
+              //   color: Colors.blue,
+              // ),
               Positioned(
                   top: 150,
                   left: 0,
                   right: 0,
                   child: Image.asset(
-                    AppImages.queiroz,
+                    AppImages.user,
                     width: 100,
-                    height: 100,
+                    height: 150,
                   )),
               Positioned(
                   bottom: size.height * 0.20,
@@ -58,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 50),
                         child: Text(
-                          "Titulo do app",
+                          "Titulo do App",
                           style: TextStyles.titleHome,
                           textAlign: TextAlign.center,
                         ),
@@ -82,7 +82,9 @@ class _LoginPageState extends State<LoginPage> {
                         validator: controller.validateSenha,
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blue),
+                            ),
                             icon: Icon(Icons.security_outlined),
                             hintText: 'Digite sua senha',
                             labelText: 'Senha'),
@@ -92,19 +94,19 @@ class _LoginPageState extends State<LoginPage> {
                       ElevatedButton(
                           style: style,
                           onPressed: () async {
-                            var passagem = await controller.login(
-                                ctrlLogin.text, ctrlSenha.text);
-                            if (passagem != 'Erro') {
-                              // ignore: use_build_context_synchronously
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          HomePage(name: passagem!)));
-                            } else {
-                              // ignore: use_build_context_synchronously
-                              _showDialog(context);
-                            }
+                            // var passagem = await controller.login(
+                            //     ctrlLogin.text, ctrlSenha.text);
+                            // if (passagem != 'Erro') {
+                            // ignore: use_build_context_synchronously
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const HomePage(name: "Teste")));
+                            // } else {
+                            //   // ignore: use_build_context_synchronously
+                            //   _showDialog(context);
+                            // }
                           },
                           child: const Text(
                             'Entrar',
@@ -124,6 +126,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
+// ignore: unused_element
 void _showDialog(BuildContext context) {
   final ButtonStyle flatButtonStyle = TextButton.styleFrom(
     foregroundColor: Colors.white,

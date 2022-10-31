@@ -15,20 +15,22 @@ class SplashPage extends StatelessWidget {
         child: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
               colors: [
-                Color.fromARGB(255, 122, 122, 122),
+                Color.fromARGB(255, 202, 202, 202),
                 Color.fromARGB(255, 255, 255, 255),
-                Color.fromARGB(171, 0, 0, 0),
+                Color.fromARGB(255, 255, 255, 255),
+                Color.fromARGB(148, 255, 255, 255),
+                // Color.fromARGB(83, 0, 0, 0),
               ],
             ),
           ),
           child: Center(
             child: Image.asset(
-              AppImages.logogif,
-              width: 200,
-              height: 100,
+              AppImages.industria,
+              width: 300,
+              height: 200,
             ),
           ),
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:macro_projeto/temas/app_colors.dart';
 
+import 'Modulos/home/home_page.dart';
 import 'Modulos/login/login_page.dart';
 import 'Modulos/splash_page.dart/splash_page.dart';
 
@@ -17,11 +18,13 @@ class AppWidget extends StatelessWidget {
     return MaterialApp(
       title: 'Rastreio',
       theme: ThemeData(
-          primarySwatch: Colors.green, primaryColor: AppColors.primary),
+          primarySwatch: Colors.blue, primaryColor: AppColors.primary),
       initialRoute: "/splash",
       routes: {
         "/splash": (context) => const SplashPage(),
-        // "/home": (context) => const HomePage(name: a,),
+        // "/home": (context) => const HomePage(
+        //       name: "teste",
+        // ),
         "/login": (context) => const LoginPage(),
         // // "/barcode_teste": (context) => BarcodeScannerTeste(),
         // "/module": (context) => Modulo(),
