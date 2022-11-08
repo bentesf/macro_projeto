@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:macro_projeto/Modulos/form/form_screen.dart';
 import 'package:macro_projeto/Modulos/home/home_controller.dart';
 // import 'package:macro_projeto/temas/app_colors.dart';
 // import 'package:macro_projeto/temas/app_images.dart';
@@ -125,8 +126,17 @@ class _HomePageState extends State<HomePage> {
                                 const TextStyle(
                                     fontSize: 14, color: Colors.white))),
                         onPressed: () {
-                          setState(() {});
-                        },
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (contextNew) => FormScreen(
+                taskContext: context,
+              ),
+            ),
+          ).then((value) => setState(() {
+                print('Recarregando a tela inicial');
+              }));
+        },
                         child: const Text(
                           'Materiais',
                           style: TextStyle(

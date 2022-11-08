@@ -1,5 +1,5 @@
 class Produto {
-  final int id;
+  final String id;
   final String descricao;
   final String aplicacao;
   final String fornecedor;
@@ -25,7 +25,19 @@ class Produto {
       this.concentracao);
 
   Map<String, dynamic> toMap() {
-    return {};
+    return {
+     'id':id,
+      'descricao':descricao,
+      'aplicacao':aplicacao,
+      'fornecedor':fornecedor,
+      'classificacao':classificacao,
+      'perigos':perigos,
+      'tipo':tipo,
+      'nomquimico':nomquimico,
+      'impurezas':impurezas,
+      'cas':cas,
+      'concentracao':concentracao,
+    };
   }
 
   factory Produto.fromMap(Map<String, dynamic> map) {
