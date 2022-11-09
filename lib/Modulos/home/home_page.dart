@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:macro_projeto/Modulos/database/produto_base.dart';
 import 'package:macro_projeto/Modulos/form/form_screen.dart';
 import 'package:macro_projeto/Modulos/home/home_controller.dart';
-// import 'package:macro_projeto/temas/app_colors.dart';
-// import 'package:macro_projeto/temas/app_images.dart';
-// import 'package:macro_projeto/temas/app_text_styles.dart';
+import 'package:macro_projeto/Modulos/list_view/list_produto.dart';
+import 'package:macro_projeto/shared/models/produto_model.dart';
 
 class HomePage extends StatefulWidget {
   final String name;
-  // final String? carga;
   const HomePage({
     Key? key,
     required this.name,
-    // this.carga,
   }) : super(key: key);
 
   @override
@@ -21,9 +19,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final controller = HomeController();
+  ProdutoDao repository = ProdutoDao();
+
+  List<Produto> produtos = [];
+
   Icon add = const Icon(Icons.menu);
   @override
   Widget build(BuildContext context) {
+     _recuperarProdutos();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -87,13 +90,13 @@ class _HomePageState extends State<HomePage> {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: "291.01",
+                          text: "${produtos.length}",
                           style: Theme.of(context)
                               .textTheme
                               .headline3
                               ?.apply(color: Colors.white, fontWeightDelta: 2),
                         ),
-                        const TextSpan(text: " m³")
+                        const TextSpan(text: " .")
                       ],
                     ),
                   ),
@@ -102,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                       Icon(Icons.lock, color: Colors.grey[300]),
                       const SizedBox(width: 5.0),
                       Text(
-                        "Somando um total de: 1.0173 m³ no Mês",
+                        "Somando um total de: ${produtos.length} no Mês",
                         style: TextStyle(color: Colors.grey[300]),
                       )
                     ],
@@ -134,7 +137,6 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ).then((value) => setState(() {
-                print('Recarregando a tela inicial');
               }));
         },
                         child: const Text(
@@ -177,7 +179,16 @@ class _HomePageState extends State<HomePage> {
                                 const TextStyle(
                                     fontSize: 14, color: Colors.white))),
                         onPressed: () {
-                          setState(() {});
+                          
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (contextNew) => ProdutosCad(
+                taskContext: context,
+              ),
+            ),
+          ).then((value) => setState(() {
+              }));
                         },
                         child: const Text(
                           '+ info',
@@ -261,5 +272,11 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+    _recuperarProdutos() async {
+    var lista = await repository.findAll();
+    setState(() {
+      produtos = lista;
+    });
   }
 }

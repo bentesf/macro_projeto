@@ -1,22 +1,11 @@
+import 'package:macro_projeto/Modulos/database/app_database.dart';
 import 'package:macro_projeto/shared/models/produto_model.dart';
 import 'package:sqflite/sqflite.dart';
 
-import 'app_database.dart';
 
 class ProdutoDao {
-  static const String tableSql = 'CREATE TABLE $_tableName('
-      '$_id TEXT, '
-      '$_descricao TEXT, '
-      '$_aplicacao TEXT, '
-      '$_fornecedor TEXT)'
-      '$_classificacao TEXT)'
-      '$_perigos TEXT)'
-      '$_tipo TEXT)'
-      '$_nomquimico TEXT)'
-      '$_impurezas TEXT)'
-      '$_cas TEXT)'
-      '$_concentracao TEXT)';
-  static const String _tableName = 'produto';
+
+  static const String _tableProd = 'produto';
   static const String _id = 'id';
   static const String _descricao ='descricao';
   static const String _aplicacao ='aplicacao';
@@ -29,16 +18,17 @@ class ProdutoDao {
   static const String _cas ='cas';
   static const String _concentracao ='concentracao';
 
+
 //SALVAR OU ALTERAR OS DADOS
-  Future<int> save(Produto produto) async {
-    final Database db = await getDatabase();
+  Future save(Produto produto) async {
+     final Database db = await DBHelper().getDatabase();
     var exist = await find(produto.id);
     Map<String, dynamic> produtoMap = _toMap(produto);
     if (exist.isEmpty) {
-      return db.insert(_tableName, produtoMap);
+      return db.insert(_tableProd, produtoMap);
     } else {
       return db.update(
-        _tableName,
+        'produto',
         produtoMap,
         where: '$_id = ?',
         whereArgs: [produto.id],
@@ -46,19 +36,27 @@ class ProdutoDao {
     }
   }
 
+//contagen
+  Future<int> countAll() async {
+     final Database db = await DBHelper().getDatabase();
+
+    final List<Map<String, dynamic>> result = await db.query(_tableProd);
+    List<Produto> produtos = _toList(result);
+    return produtos.length;
+  }
 //BUSCAR TODOS OS DADOS
   Future<List<Produto>> findAll() async {
-    final Database db = await getDatabase();
-    final List<Map<String, dynamic>> result = await db.query(_tableName);
+     final Database db = await DBHelper().getDatabase();
+    final List<Map<String, dynamic>> result = await db.query(_tableProd);
     List<Produto> produtos = _toList(result);
     return produtos;
   }
-
-//BUSCAR UM DADOS ESPECCIFICOS
+//BUSCAR UM DADOS ESPECIFICOS
   Future<List<Produto>> find(String id) async {
-    final Database db = await getDatabase();
+     final Database db = await DBHelper().getDatabase();
+
     final List<Map<String, dynamic>> result = await db.query(
-      _tableName,
+      _tableProd,
       where: '$_id = ?',
       whereArgs: [id],
     );
@@ -107,9 +105,10 @@ class ProdutoDao {
 
 //DELETAR DADOS
   delete(String id) async {
-    final Database db = await getDatabase();
+      final Database db = await DBHelper().getDatabase();
+
     return db.delete(
-      _tableName,
+      _tableProd,
       where: '$_id = ?',
       whereArgs: [id],
     );

@@ -4,12 +4,8 @@ import 'package:sqflite/sqflite.dart';
 import 'app_database.dart';
 
 class ContactDao {
-  static const String tableSql = 'CREATE TABLE $_tableName('
-      '$_nome TEXT, '
-      '$_email TEXT, '
-      '$_senha TEXT, '
-      '$_perfil TEXT)';
-  static const String _tableName = 'usuario';
+
+  static const String _tableUser = 'usuario';
   static const String _nome = 'nome';
   static const String _email = 'email';
   static const String _senha = 'senha';
@@ -17,14 +13,14 @@ class ContactDao {
 
 //SALVAR OU ALTERAR OS DADOS
   Future<int> save(Usuario usuario) async {
-    final Database db = await getDatabase();
+    final Database db = await DBHelper().getDatabase();
     var exist = await find(usuario.nome);
     Map<String, dynamic> usuarioMap = _toMap(usuario);
     if (exist.isEmpty) {
-      return db.insert(_tableName, usuarioMap);
+      return db.insert(_tableUser, usuarioMap);
     } else {
       return db.update(
-        _tableName,
+        _tableUser,
         usuarioMap,
         where: '$_nome = ?',
         whereArgs: [usuario.nome],
@@ -34,17 +30,19 @@ class ContactDao {
 
 //BUSCAR TODOS OS DADOS
   Future<List<Usuario>> findAll() async {
-    final Database db = await getDatabase();
-    final List<Map<String, dynamic>> result = await db.query(_tableName);
+    final Database db = await DBHelper().getDatabase();
+
+    final List<Map<String, dynamic>> result = await db.query(_tableUser);
     List<Usuario> usuarios = _toList(result);
     return usuarios;
   }
 
 //BUSCAR UM DADOS ESPECCIFICOS
   Future<List<Usuario>> find(String nome) async {
-    final Database db = await getDatabase();
+    final Database db = await DBHelper().getDatabase();
+
     final List<Map<String, dynamic>> result = await db.query(
-      _tableName,
+      _tableUser,
       where: '$_nome = ?',
       whereArgs: [nome],
     );
@@ -79,9 +77,10 @@ class ContactDao {
 
 //DELETAR DADOS
   delete(String nome) async {
-    final Database db = await getDatabase();
+  final Database db = await DBHelper().getDatabase();
+
     return db.delete(
-      _tableName,
+      _tableUser,
       where: '$_nome = ?',
       whereArgs: [nome],
     );
