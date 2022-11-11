@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:macro_projeto/Modulos/database/produto_base.dart';
+import 'package:macro_projeto/Modulos/list_view/detalhes.dart';
 import 'package:macro_projeto/shared/models/produto_model.dart';
 
 class ProdutosCad extends StatefulWidget {
@@ -53,7 +54,13 @@ class _ProdutosCadState extends State<ProdutosCad> {
               trailing: CircleAvatar(
                 backgroundColor: _cor((index%2) ==0 ? 1:2),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                         const Detalhes()));
+              },
             ),
           );
         },

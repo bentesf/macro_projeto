@@ -3,13 +3,13 @@ import 'package:macro_projeto/Modulos/database/produto_base.dart';
 import 'package:macro_projeto/Modulos/form/form_screen.dart';
 import 'package:macro_projeto/Modulos/home/home_controller.dart';
 import 'package:macro_projeto/Modulos/list_view/list_produto.dart';
+import 'package:macro_projeto/shared/auth/auth_controller.dart';
 import 'package:macro_projeto/shared/models/produto_model.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
-  final String name;
-  const HomePage({
+   const HomePage({
     Key? key,
-    required this.name,
   }) : super(key: key);
 
   @override
@@ -20,13 +20,19 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final controller = HomeController();
   ProdutoDao repository = ProdutoDao();
+  late AuthController auth;
 
   List<Produto> produtos = [];
 
   Icon add = const Icon(Icons.menu);
+
+  sair() {
+   context.read<AuthController>().logout();
+  }
+
   @override
   Widget build(BuildContext context) {
-     _recuperarProdutos();
+    //  _recuperarProdutos();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -41,6 +47,10 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             icon: const Icon(Icons.notifications_none),
             onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {sair();}
           )
         ],
       ),
@@ -57,7 +67,7 @@ class _HomePageState extends State<HomePage> {
                   ?.apply(color: Colors.grey[500]),
             ),
             Text(
-              "Sr. ${widget.name}",
+              "Sr. TESTE",
               style: Theme.of(context)
                   .textTheme
                   .headline4
@@ -272,11 +282,5 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
-  }
-    _recuperarProdutos() async {
-    var lista = await repository.findAll();
-    setState(() {
-      produtos = lista;
-    });
   }
 }

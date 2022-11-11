@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:macro_projeto/Modulos/home/home_page.dart';
+import 'package:macro_projeto/shared/auth/auth_controller.dart';
 import 'package:macro_projeto/temas/app_colors.dart';
 import 'package:macro_projeto/temas/app_images.dart';
 import 'package:macro_projeto/temas/app_text_styles.dart';
+import 'package:provider/provider.dart';
 
 import 'login_controller.dart';
 
@@ -18,6 +19,52 @@ class _LoginPageState extends State<LoginPage> {
   final ctrlLogin = TextEditingController();
   final ctrlSenha = TextEditingController();
   final controller = LoginController();
+  bool isLogin = true;
+  late String titulo;
+   late String actionButton;
+  late String toggleButton;
+  bool loading = false;
+  
+    @override
+  void initState() {
+    super.initState();
+    setFormAction(true);
+  }
+
+  setFormAction(bool acao) {
+    setState(() {
+      isLogin = acao;
+      if (isLogin) {
+        titulo = 'Bem vindo';
+        actionButton = "Login";
+        toggleButton = 'Ainda não tem conta? Cadastre-se agora.';
+      } else {
+        titulo = 'Crie sua conta';
+        actionButton = 'Cadastrar';
+        toggleButton = 'Voltar ao Login.';
+      }
+    });
+  }
+  
+  login() async {
+    setState(() => loading = true);
+    try {
+      await context.read<AuthController>().login(ctrlLogin.text, ctrlSenha.text);
+    } on AuthException catch (e) {
+      setState(() => loading = false);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.message)));
+    }
+  }
+  registrar() async {
+    setState(() => loading = true);
+    try {
+      await context.read<AuthController>().registrar(ctrlLogin.text, ctrlSenha.text);
+    } on AuthException catch (e) {
+      setState(() => loading = false);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.message)));
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -58,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 50),
                         child: Text(
-                          "Titulo do App",
+                          titulo,
                           style: TextStyles.titleHome,
                           textAlign: TextAlign.center,
                         ),
@@ -94,28 +141,58 @@ class _LoginPageState extends State<LoginPage> {
                       ElevatedButton(
                           style: style,
                           onPressed: () async {
-                            // var passagem = await controller.login(
-                            //     ctrlLogin.text, ctrlSenha.text);
-                            // if (passagem != 'Erro') {
-                            // ignore: use_build_context_synchronously
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const HomePage(name: "Teste")));
-                            // } else {
-                            //   // ignore: use_build_context_synchronously
-                            //   _showDialog(context);
-                            // }
+                      if (isLogin) {
+                          login();
+                        } else {
+                          registrar();
+                        }
                           },
-                          child: const Text(
-                            'Entrar',
+                     child: (loading)
+                          ? 
+                              const Padding(
+                                padding: EdgeInsets.all(16),
+                                child: SizedBox(
+                                  width: 24,
+                                  height: 24,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              )
+                            
+                          : 
+                              // const Icon(Icons.check),
+                              Text(
+                            actionButton,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 30,
                             ),
-                          )),
+                          )
+                              // Padding(
+                              //   padding: const EdgeInsets.all(16.0),
+                              //   child: Text(
+                              //     actionButton,
+                              //     style: const TextStyle(fontSize: 20),
+                              //   ),
+                              // ),
+                            ,
+                    ),
+                  
+                
+                TextButton(
+                  onPressed: () => setFormAction(!isLogin),
+                  child: Text(toggleButton),
+                ),
+                          // child: const Text(
+                          //   'Entrar',
+                          //   textAlign: TextAlign.center,
+                          //   style: TextStyle(
+                          //     color: Colors.white,
+                          //     fontSize: 30,
+                          //   ),
+                          // )),
                     ],
                   ))
             ],

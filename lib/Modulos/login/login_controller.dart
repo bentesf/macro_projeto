@@ -35,34 +35,3 @@ class LoginController {
     }
   }
 }
-  // Future<List<Usuario>> getContacts() async {
-  //   try {
-  //     final Database db = await getDatabase();
-  //     final List<Map<String, dynamic>> maps = await db.query('usuario');
-
-  //     return List.generate(
-  //       maps.length,
-  //       (i) {
-  //         return Usuario.fromMap(maps[i]);
-  //       },
-  //     );
-  //   } catch (ex) {
-  //     print(ex);
-  //     return <Usuario>[];
-  //   }
-  // }
-
-  // Future create(Usuario user) async {
-  //   try {
-  //     final Database db = await getDatabase();
-
-  //     await db.insert(
-  //       'usuario',
-  //       user.toMap(),
-  //     );
-  //   } catch (ex) {
-  //     print(ex);
-  //     return;
-  //   }
-  // }
-// }
