@@ -15,17 +15,17 @@ class FormScreen extends StatefulWidget {
 class _FormScreenState extends State<FormScreen> {
   // TextEditingController idcontroller    = TextEditingController();
   String? idcontroller;
-  TextEditingController desccontroller  = TextEditingController();
-  TextEditingController aplicontroller  = TextEditingController();
-  TextEditingController forncontroller  = TextEditingController();
+  TextEditingController desccontroller = TextEditingController();
+  TextEditingController aplicontroller = TextEditingController();
+  TextEditingController forncontroller = TextEditingController();
   TextEditingController classcontroller = TextEditingController();
-  TextEditingController pericontroller  = TextEditingController();
-  TextEditingController tipocontroller  = TextEditingController();
-  TextEditingController nomqcontroller  = TextEditingController();
-  TextEditingController impucontroller  = TextEditingController();
-  TextEditingController cascontroller   = TextEditingController();
+  TextEditingController pericontroller = TextEditingController();
+  TextEditingController tipocontroller = TextEditingController();
+  TextEditingController nomqcontroller = TextEditingController();
+  TextEditingController impucontroller = TextEditingController();
+  TextEditingController cascontroller = TextEditingController();
   TextEditingController concecontroller = TextEditingController();
-  List<Produto> produtos=[];
+  List<Produto> produtos = [];
 
   final controller = FormController();
   final _formKey = GlobalKey<FormState>();
@@ -33,12 +33,12 @@ class _FormScreenState extends State<FormScreen> {
   // var produtos = ProdutoDao.countAll();
   @override
   Widget build(BuildContext context) {
-       _recuperarProdutos();
+    _recuperarProdutos();
     return Form(
       key: _formKey,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Nova Produto ID- ${produtos.length+1}'),
+          title: Text('Novo Produto ID- ${produtos.length + 1}'),
         ),
         body: Center(
           child: SingleChildScrollView(
@@ -56,7 +56,7 @@ class _FormScreenState extends State<FormScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                // DESCRIÇÂO
+                    // DESCRIÇÂO
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
@@ -78,8 +78,8 @@ class _FormScreenState extends State<FormScreen> {
                         ),
                       ),
                     ),
-                // APLICAÇÃO
-                      Padding(
+                    // APLICAÇÃO
+                    Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
                         validator: (String? value) {
@@ -99,8 +99,8 @@ class _FormScreenState extends State<FormScreen> {
                         ),
                       ),
                     ),
-                // FORNECEDOR
-                      Padding(
+                    // FORNECEDOR
+                    Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
                         validator: (String? value) {
@@ -120,8 +120,8 @@ class _FormScreenState extends State<FormScreen> {
                         ),
                       ),
                     ),
-                // CLASSIFICAÇÃO
-                      Padding(
+                    // CLASSIFICAÇÃO
+                    Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
                         validator: (String? value) {
@@ -141,8 +141,8 @@ class _FormScreenState extends State<FormScreen> {
                         ),
                       ),
                     ),
-                // PERIGOS
-                      Padding(
+                    // PERIGOS
+                    Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
                         validator: (String? value) {
@@ -162,8 +162,8 @@ class _FormScreenState extends State<FormScreen> {
                         ),
                       ),
                     ),
-                // TIPO
-                      Padding(
+                    // TIPO
+                    Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
                         validator: (String? value) {
@@ -183,8 +183,8 @@ class _FormScreenState extends State<FormScreen> {
                         ),
                       ),
                     ),
-                // NOME QUIMICO
-                      Padding(
+                    // NOME QUIMICO
+                    Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
                         validator: (String? value) {
@@ -204,8 +204,8 @@ class _FormScreenState extends State<FormScreen> {
                         ),
                       ),
                     ),
-                // IMPUREZAS
-                      Padding(
+                    // IMPUREZAS
+                    Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
                         validator: (String? value) {
@@ -225,8 +225,8 @@ class _FormScreenState extends State<FormScreen> {
                         ),
                       ),
                     ),
-                // CAS
-                      Padding(
+                    // CAS
+                    Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
                         validator: (String? value) {
@@ -246,8 +246,8 @@ class _FormScreenState extends State<FormScreen> {
                         ),
                       ),
                     ),
-                // CONCENTRAÇÃO
-                      Padding(
+                    // CONCENTRAÇÃO
+                    Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
                         validator: (String? value) {
@@ -271,18 +271,18 @@ class _FormScreenState extends State<FormScreen> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           ProdutoDao().save(Produto(
-                             idcontroller = produtos.length.toString(),
-                             desccontroller.text,
-                             aplicontroller.text,
-                             forncontroller.text,
-                             classcontroller.text,
-                             pericontroller.text,
-                             tipocontroller.text,
-                             nomqcontroller.text,
-                             impucontroller.text,
-                             cascontroller.text,
-                             concecontroller.text,
-                              ));
+                            idcontroller = produtos.length.toString(),
+                            desccontroller.text,
+                            aplicontroller.text,
+                            forncontroller.text,
+                            classcontroller.text,
+                            pericontroller.text,
+                            tipocontroller.text,
+                            nomqcontroller.text,
+                            impucontroller.text,
+                            cascontroller.text,
+                            concecontroller.text,
+                          ));
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text('Adicionando um novo produto'),
@@ -302,7 +302,8 @@ class _FormScreenState extends State<FormScreen> {
       ),
     );
   }
-      _recuperarProdutos() async {
+
+  _recuperarProdutos() async {
     var lista = await repository.findAll();
     setState(() {
       produtos = lista;

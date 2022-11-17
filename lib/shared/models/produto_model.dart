@@ -24,19 +24,19 @@ class Produto {
       this.cas,
       this.concentracao);
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toMap(Produto produto) {
     return {
-     'id':id,
-      'descricao':descricao,
-      'aplicacao':aplicacao,
-      'fornecedor':fornecedor,
-      'classificacao':classificacao,
-      'perigos':perigos,
-      'tipo':tipo,
-      'nomquimico':nomquimico,
-      'impurezas':impurezas,
-      'cas':cas,
-      'concentracao':concentracao,
+      'id': id,
+      'descricao': descricao,
+      'aplicacao': aplicacao,
+      'fornecedor': fornecedor,
+      'classificacao': classificacao,
+      'perigos': perigos,
+      'tipo': tipo,
+      'nomquimico': nomquimico,
+      'impurezas': impurezas,
+      'cas': cas,
+      'concentracao': concentracao,
     };
   }
 

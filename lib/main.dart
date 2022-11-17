@@ -1,7 +1,7 @@
-
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:macro_projeto/Modulos/database/base.dart';
+import 'package:macro_projeto/Modulos/home/home_controller.dart';
 import 'package:macro_projeto/Modulos/splash_page.dart/splash_page.dart';
 import 'package:macro_projeto/shared/auth/auth_controller.dart';
 import 'package:provider/provider.dart';
@@ -11,17 +11,20 @@ void main() async {
   // await Firebase.initializeApp();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    // options: DefaultFirebase
-  );
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => AuthController())
-      ],
-      child: const SplashPage(),
-    )
-  );
-
+      // options: DefaultFirebase
+      );
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) => AuthController()),
+      ChangeNotifierProvider(
+        create: (context) => ContactDao(auth: context.read<AuthController>()),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => HomeController(),
+      )
+    ],
+    child: const SplashPage(),
+  ));
 }
 
 // class AppWidget extends StatelessWidget {

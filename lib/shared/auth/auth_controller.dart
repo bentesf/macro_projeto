@@ -1,7 +1,5 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-
 
 class AuthException implements Exception {
   String message;
@@ -9,24 +7,23 @@ class AuthException implements Exception {
 }
 
 class AuthController extends ChangeNotifier {
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   User? usuario;
   // Usuario get user => _name!;
   bool isLoading = true;
 
-  AuthController(){
+  AuthController() {
     Future.delayed(const Duration(seconds: 5));
     _authCheck();
   }
 
-  _authCheck(){
+  _authCheck() {
     _auth.authStateChanges().listen((User? user) {
       usuario = (user == null) ? null : user;
       isLoading = false;
       notifyListeners();
-     });
+    });
   }
 
   _getUser() {
@@ -64,5 +61,4 @@ class AuthController extends ChangeNotifier {
     await _auth.signOut();
     _getUser();
   }
-
 }

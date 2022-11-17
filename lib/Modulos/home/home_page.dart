@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:macro_projeto/Modulos/database/produto_base.dart';
 import 'package:macro_projeto/Modulos/form/form_screen.dart';
+import 'package:macro_projeto/Modulos/form/form_user.dart';
 import 'package:macro_projeto/Modulos/home/home_controller.dart';
 import 'package:macro_projeto/Modulos/list_view/list_produto.dart';
 import 'package:macro_projeto/shared/auth/auth_controller.dart';
-import 'package:macro_projeto/shared/models/produto_model.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
-   const HomePage({
+  const HomePage({
     Key? key,
   }) : super(key: key);
 
@@ -18,21 +18,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final controller = HomeController();
+  // final controller = HomeController(auth: context.read<AuthController>());
   ProdutoDao repository = ProdutoDao();
   late AuthController auth;
 
-  List<Produto> produtos = [];
+  // var nome;
 
   Icon add = const Icon(Icons.menu);
 
   sair() {
-   context.read<AuthController>().logout();
+    context.read<AuthController>().logout();
+    context.read<AuthController>().usuario;
   }
 
   @override
   Widget build(BuildContext context) {
-    //  _recuperarProdutos();
+    Future<String> nome = HomeController().favoritas();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -49,9 +50,10 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () {sair();}
-          )
+              icon: const Icon(Icons.logout),
+              onPressed: () {
+                sair();
+              })
         ],
       ),
       body: SingleChildScrollView(
@@ -100,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: "${produtos.length}",
+                          text: "0",
                           style: Theme.of(context)
                               .textTheme
                               .headline3
@@ -115,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                       Icon(Icons.lock, color: Colors.grey[300]),
                       const SizedBox(width: 5.0),
                       Text(
-                        "Somando um total de: ${produtos.length} no Mês",
+                        "Somando um total de: 0 no Mês",
                         style: TextStyle(color: Colors.grey[300]),
                       )
                     ],
@@ -139,16 +141,15 @@ class _HomePageState extends State<HomePage> {
                                 const TextStyle(
                                     fontSize: 14, color: Colors.white))),
                         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (contextNew) => FormScreen(
-                taskContext: context,
-              ),
-            ),
-          ).then((value) => setState(() {
-              }));
-        },
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (contextNew) => FormScreen(
+                                taskContext: context,
+                              ),
+                            ),
+                          ).then((value) => setState(() {}));
+                        },
                         child: const Text(
                           'Materiais',
                           style: TextStyle(
@@ -168,7 +169,14 @@ class _HomePageState extends State<HomePage> {
                                 const TextStyle(
                                     fontSize: 14, color: Colors.white))),
                         onPressed: () {
-                          setState(() {});
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (contextNew) => FormUser(
+                                taskContext: context,
+                              ),
+                            ),
+                          ).then((value) => setState(() {}));
                         },
                         child: const Text(
                           'Locais',
@@ -189,16 +197,14 @@ class _HomePageState extends State<HomePage> {
                                 const TextStyle(
                                     fontSize: 14, color: Colors.white))),
                         onPressed: () {
-                          
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (contextNew) => ProdutosCad(
-                taskContext: context,
-              ),
-            ),
-          ).then((value) => setState(() {
-              }));
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (contextNew) => ProdutosCad(
+                                taskContext: context,
+                              ),
+                            ),
+                          ).then((value) => setState(() {}));
                         },
                         child: const Text(
                           '+ info',
