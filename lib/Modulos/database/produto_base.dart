@@ -17,6 +17,7 @@ class ProdutoDao {
   static const String _impurezas = 'impurezas';
   static const String _cas = 'cas';
   static const String _concentracao = 'concentracao';
+  static const String _local = 'local';
   late FirebaseFirestore db;
 
   ProdutoDao() {
@@ -33,21 +34,21 @@ class ProdutoDao {
 
 //SALVAR OU ALTERAR OS DADOS
   Future save(Produto produto) async {
-    //  final Database db = await DBHelper().getDatabase();
+    final Database db = await DBHelper().getDatabase();
 
-    // var exist = await find(produto.id);
+    var exist = await find(produto.id);
     Map<String, dynamic> produtoMap = _toMap(produto);
-    await db.collection('produtos').doc().set(produtoMap);
-    // if (exist.isEmpty) {
-    //   return db.insert(_tableProd, produtoMap);
-    // } else {
-    //   return db.update(
-    //     'produto',
-    //     produtoMap,
-    //     where: '$_id = ?',
-    //     whereArgs: [produto.id],
-    //   );
-    // }
+    // await db.collection('produtos').doc().set(produtoMap);
+    if (exist.isEmpty) {
+      return db.insert(_tableProd, produtoMap);
+    } else {
+      return db.update(
+        'produto',
+        produtoMap,
+        where: '$_id = ?',
+        whereArgs: [produto.id],
+      );
+    }
   }
 
 //contagen
@@ -68,13 +69,13 @@ class ProdutoDao {
   }
 
 //BUSCAR UM DADOS ESPECIFICOS
-  Future<List<Produto>> find(String id) async {
+  Future<List<Produto>> find(String area) async {
     final Database db = await DBHelper().getDatabase();
 
     final List<Map<String, dynamic>> result = await db.query(
       _tableProd,
-      where: '$_id = ?',
-      whereArgs: [id],
+      where: '$_local = ?',
+      whereArgs: [area],
     );
     List<Produto> produtos = _toList(result);
     return produtos;
@@ -94,6 +95,7 @@ class ProdutoDao {
     produtoMap[_impurezas] = produto.impurezas;
     produtoMap[_cas] = produto.cas;
     produtoMap[_concentracao] = produto.concentracao;
+    produtoMap[_local] = produto.local;
     return produtoMap;
   }
 
@@ -113,6 +115,7 @@ class ProdutoDao {
         row[_impurezas],
         row[_cas],
         row[_concentracao],
+        row[_local],
       );
       produtos.add(produto);
     }

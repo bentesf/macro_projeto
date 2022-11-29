@@ -5,47 +5,47 @@ import 'package:macro_projeto/shared/models/user_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'app_database.dart';
-import 'db_firestore.dart';
 
 class ContactDao extends ChangeNotifier {
-  static const String _tableUser = 'usuario';
-  static const String _nome = 'nome';
-  static const String _perfil = 'perfil';
+  static const String _tableUser = 'local';
+  static const String _descri = 'descri';
+  static const String _area = 'area';
+  static const String _cap = 'cap';
   late FirebaseFirestore db;
   late AuthController auth;
 
-  ContactDao({required this.auth}) {
-    _startRepository();
-  }
+  // ContactDao() {
+  //   _startRepository();
+  // }
 
-  _startRepository() async {
-    await _startFirestore();
-  }
+  // _startRepository() async {
+  //   await _startFirestore();
+  // }
 
-  _startFirestore() {
-    db = DBFirestore.get();
-  }
+  // _startFirestore() {
+  //   db = DBFirestore.get();
+  // }
 
 //SALVAR OU ALTERAR OS DADOS
   Future save(Usuario usuarios) async {
-    //  final Database db = await DBHelper().getDatabase();
+    final Database db = await DBHelper().getDatabase();
 
-    // var exist = await find(produto.id);
+    var exist = await find(usuarios.descri);
     Map<String, dynamic> usuariosMap = _toMap(usuarios);
-    await db
-        .collection('usuarios/${auth.usuario!.uid}/dados')
-        .doc()
-        .set(usuariosMap);
-    // if (exist.isEmpty) {
-    //   return db.insert(_tableProd, produtoMap);
-    // } else {
-    //   return db.update(
-    //     'produto',
-    //     produtoMap,
-    //     where: '$_id = ?',
-    //     whereArgs: [produto.id],
-    //   );
-    // }
+    // await db
+    // .collection('usuarios/${auth.usuario!.uid}/dados')
+    // .doc()
+    // .set(usuariosMap);
+    if (exist.isEmpty) {
+      return db.insert(_tableUser, usuariosMap);
+    } else {
+      return db.update(
+        'local',
+        usuariosMap,
+        where: '$_descri = ?',
+        whereArgs: [usuarios.descri],
+      );
+    }
   }
 
 //BUSCAR TODOS OS DADOS
@@ -58,13 +58,13 @@ class ContactDao extends ChangeNotifier {
   }
 
 //BUSCAR UM DADOS ESPECCIFICOS
-  Future<List<Usuario>> find(String nome) async {
+  Future<List<Usuario>> find(String descri) async {
     final Database db = await DBHelper().getDatabase();
 
     final List<Map<String, dynamic>> result = await db.query(
       _tableUser,
-      where: '$_nome = ?',
-      whereArgs: [nome],
+      where: '$_descri = ?',
+      whereArgs: [descri],
     );
     List<Usuario> usuarios = _toList(result);
     return usuarios;
@@ -73,8 +73,9 @@ class ContactDao extends ChangeNotifier {
 //CONVERTE UM LIST PARA UM MAP
   Map<String, dynamic> _toMap(Usuario usuario) {
     final Map<String, dynamic> usuarioMap = {};
-    usuarioMap[_nome] = usuario.nome;
-    usuarioMap[_perfil] = usuario.perfil;
+    usuarioMap[_descri] = usuario.descri;
+    usuarioMap[_area] = usuario.area;
+    usuarioMap[_cap] = usuario.cap;
     return usuarioMap;
   }
 
@@ -83,8 +84,9 @@ class ContactDao extends ChangeNotifier {
     final List<Usuario> usuarios = [];
     for (Map<String, dynamic> row in result) {
       final Usuario usuario = Usuario(
-        row[_nome],
-        row[_perfil],
+        row[_descri],
+        row[_area],
+        row[_cap],
       );
       usuarios.add(usuario);
     }
@@ -92,13 +94,13 @@ class ContactDao extends ChangeNotifier {
   }
 
 //DELETAR DADOS
-  delete(String nome) async {
+  delete(String descri) async {
     final Database db = await DBHelper().getDatabase();
 
     return db.delete(
       _tableUser,
-      where: '$_nome = ?',
-      whereArgs: [nome],
+      where: '$_descri = ?',
+      whereArgs: [descri],
     );
   }
 }

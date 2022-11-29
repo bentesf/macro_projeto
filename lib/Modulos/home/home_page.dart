@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:macro_projeto/Modulos/database/produto_base.dart';
 import 'package:macro_projeto/Modulos/form/form_screen.dart';
 import 'package:macro_projeto/Modulos/form/form_user.dart';
-import 'package:macro_projeto/Modulos/home/home_controller.dart';
 import 'package:macro_projeto/Modulos/list_view/list_produto.dart';
 import 'package:macro_projeto/shared/auth/auth_controller.dart';
 import 'package:provider/provider.dart';
@@ -18,11 +17,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // final controller = HomeController(auth: context.read<AuthController>());
   ProdutoDao repository = ProdutoDao();
   late AuthController auth;
-
-  // var nome;
 
   Icon add = const Icon(Icons.menu);
 
@@ -33,7 +29,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    Future<String> nome = HomeController().favoritas();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -45,10 +40,10 @@ class _HomePageState extends State<HomePage> {
           onPressed: () {},
         ),
         actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.notifications_none),
-            onPressed: () {},
-          ),
+          // IconButton(
+          //   icon: const Icon(Icons.notifications_none),
+          //   onPressed: () {},
+          // ),
           IconButton(
               icon: const Icon(Icons.logout),
               onPressed: () {
@@ -69,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                   ?.apply(color: Colors.grey[500]),
             ),
             Text(
-              "Sr. TESTE",
+              "Sr. James",
               style: Theme.of(context)
                   .textTheme
                   .headline4
@@ -88,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   const Text(
-                    "Ultimas entradas",
+                    "Reservas",
                     style: TextStyle(
                       fontSize: 19,
                       fontWeight: FontWeight.bold,
@@ -108,13 +103,13 @@ class _HomePageState extends State<HomePage> {
                               .headline3
                               ?.apply(color: Colors.white, fontWeightDelta: 2),
                         ),
-                        const TextSpan(text: " .")
+                        const TextSpan(text: " ")
                       ],
                     ),
                   ),
                   Row(
                     children: <Widget>[
-                      Icon(Icons.lock, color: Colors.grey[300]),
+                      Icon(Icons.list, color: Colors.grey[300]),
                       const SizedBox(width: 5.0),
                       Text(
                         "Somando um total de: 0 no Mês",
@@ -144,62 +139,6 @@ class _HomePageState extends State<HomePage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (contextNew) => FormScreen(
-                                taskContext: context,
-                              ),
-                            ),
-                          ).then((value) => setState(() {}));
-                        },
-                        child: const Text(
-                          'Materiais',
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
-                      )),
-                      Flexible(
-                          child: ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.blue),
-                            padding: MaterialStateProperty.all(
-                              const EdgeInsets.symmetric(
-                                  horizontal: 15.0, vertical: 11.0),
-                            ),
-                            textStyle: MaterialStateProperty.all(
-                                const TextStyle(
-                                    fontSize: 14, color: Colors.white))),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (contextNew) => FormUser(
-                                taskContext: context,
-                              ),
-                            ),
-                          ).then((value) => setState(() {}));
-                        },
-                        child: const Text(
-                          'Locais',
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
-                      )),
-                      Flexible(
-                          child: ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.blue),
-                            padding: MaterialStateProperty.all(
-                              const EdgeInsets.symmetric(
-                                  horizontal: 15.0, vertical: 11.0),
-                            ),
-                            textStyle: MaterialStateProperty.all(
-                                const TextStyle(
-                                    fontSize: 14, color: Colors.white))),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
                               builder: (contextNew) => ProdutosCad(
                                 taskContext: context,
                               ),
@@ -207,7 +146,7 @@ class _HomePageState extends State<HomePage> {
                           ).then((value) => setState(() {}));
                         },
                         child: const Text(
-                          '+ info',
+                          '+ Informações',
                           style: TextStyle(
                               color: Colors.white, fontWeight: FontWeight.bold),
                         ),
@@ -219,6 +158,9 @@ class _HomePageState extends State<HomePage> {
             ),
             const Divider(
               height: 30,
+            ),
+            const SizedBox(
+              height: 11.0,
             ),
             Row(
               children: <Widget>[
@@ -241,49 +183,132 @@ class _HomePageState extends State<HomePage> {
               height: 30,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Flexible(
-                  flex: 3,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "Foram descartados",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline4
-                            ?.apply(color: Colors.blue, fontWeightDelta: 2),
+                    child: ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.blue),
+                      padding: MaterialStateProperty.all(
+                        const EdgeInsets.symmetric(
+                            horizontal: 15.0, vertical: 11.0),
                       ),
-                    ],
+                      textStyle: MaterialStateProperty.all(
+                          const TextStyle(fontSize: 14, color: Colors.white))),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (contextNew) => FormScreen(
+                          taskContext: context,
+                        ),
+                      ),
+                    ).then((value) => setState(() {}));
+                  },
+                  child: const Text(
+                    'Adicionar \n Produto',
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
                   ),
-                ),
+                )),
                 Flexible(
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        "17.000 m³",
-                        style: Theme.of(context).textTheme.headline5?.apply(
-                            color: const Color(0xff17dcb0), fontWeightDelta: 2),
-                        textAlign: TextAlign.center,
+                    child: ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.blue),
+                      padding: MaterialStateProperty.all(
+                        const EdgeInsets.symmetric(
+                            horizontal: 15.0, vertical: 11.0),
                       ),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.blue),
+                      textStyle: MaterialStateProperty.all(
+                          const TextStyle(fontSize: 14, color: Colors.white))),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (contextNew) => Locais(
+                          taskContext: context,
                         ),
-                        onPressed: () {
-                          setState(() {});
-                        },
-                        child: const Text(
-                          "Verificar",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      )
-                    ],
+                      ),
+                    ).then((value) => setState(() {}));
+                  },
+                  child: const Text(
+                    'Ver \n Locais',
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
                   ),
-                )
+                )),
+                Flexible(
+                    child: ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.blue),
+                      padding: MaterialStateProperty.all(
+                        const EdgeInsets.symmetric(
+                            horizontal: 15.0, vertical: 11.0),
+                      ),
+                      textStyle: MaterialStateProperty.all(
+                          const TextStyle(fontSize: 14, color: Colors.white))),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (contextNew) => ProdutosCad(
+                          taskContext: context,
+                        ),
+                      ),
+                    ).then((value) => setState(() {}));
+                  },
+                  child: const Text(
+                    'Listar \n Produtos',
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                )),
               ],
             )
+            // Row(
+            //   children: <Widget>[
+            //     Flexible(
+            //       flex: 3,
+            //       child: Column(
+            //         crossAxisAlignment: CrossAxisAlignment.start,
+            //         children: <Widget>[
+            //           Text(
+            //             "Foram descartados",
+            //             style: Theme.of(context)
+            //                 .textTheme
+            //                 .headline4
+            //                 ?.apply(color: Colors.blue, fontWeightDelta: 2),
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //     Flexible(
+            //       child: Column(
+            //         children: <Widget>[
+            //           Text(
+            //             "17.000 m³",
+            //             style: Theme.of(context).textTheme.headline5?.apply(
+            //                 color: const Color(0xff17dcb0), fontWeightDelta: 2),
+            //             textAlign: TextAlign.center,
+            //           ),
+            //           ElevatedButton(
+            //             style: ButtonStyle(
+            //               backgroundColor:
+            //                   MaterialStateProperty.all(Colors.blue),
+            //             ),
+            //             onPressed: () {
+            //               setState(() {});
+            //             },
+            //             child: const Text(
+            //               "Verificar",
+            //               style: TextStyle(color: Colors.white),
+            //             ),
+            //           )
+            //         ],
+            //       ),
+            //     )
+            //   ],
+            // )
           ],
         ),
       ),

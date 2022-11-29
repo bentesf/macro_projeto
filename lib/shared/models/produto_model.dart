@@ -10,6 +10,7 @@ class Produto {
   final String impurezas;
   final String cas;
   final String concentracao;
+  final String local;
 
   Produto(
       this.id,
@@ -22,7 +23,8 @@ class Produto {
       this.nomquimico,
       this.impurezas,
       this.cas,
-      this.concentracao);
+      this.concentracao,
+      this.local);
 
   Map<String, dynamic> toMap(Produto produto) {
     return {
@@ -37,6 +39,7 @@ class Produto {
       'impurezas': impurezas,
       'cas': cas,
       'concentracao': concentracao,
+      'local': local,
     };
   }
 
@@ -53,6 +56,7 @@ class Produto {
       map['impurezas'],
       map['cas'],
       map['concentracao'],
+      map['local'],
     );
   }
 

@@ -1,19 +1,19 @@
 import 'package:anchor_scroll_controller/anchor_scroll_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:macro_projeto/Modulos/database/produto_base.dart';
-import 'package:macro_projeto/Modulos/list_view/detalhes.dart';
-import 'package:macro_projeto/shared/models/produto_model.dart';
 
-class ProdutosCad extends StatefulWidget {
-  const ProdutosCad({Key? key, required this.taskContext}) : super(key: key);
+import '../../shared/models/produto_model.dart';
+import '../database/produto_base.dart';
+import '../list_view/detalhes.dart';
 
-  final BuildContext taskContext;
+class ProdLocais extends StatefulWidget {
+  const ProdLocais({Key? key, required this.area}) : super(key: key);
+
+  final String area;
   @override
-  // ignore: library_private_types_in_public_api
-  _ProdutosCadState createState() => _ProdutosCadState();
+  State<ProdLocais> createState() => _ProdLocaisState();
 }
 
-class _ProdutosCadState extends State<ProdutosCad> {
+class _ProdLocaisState extends State<ProdLocais> {
   ProdutoDao repository = ProdutoDao();
 
   List<Produto> produtos = [];
@@ -96,7 +96,7 @@ class _ProdutosCadState extends State<ProdutosCad> {
   }
 
   _recuperarProdutos() async {
-    var lista = await repository.findAll();
+    var lista = await repository.find(widget.area);
     setState(() {
       produtos = lista;
     });

@@ -24,8 +24,8 @@ class HomeController extends ChangeNotifier {
 
   Future<dynamic> readFavoritas() async {
     // if (auth.usuario != null) {
-    var collection = db.collection('usuarios/${auth.usuario!.uid}/dados');
-    var result = await collection.get();
+    // var collection = db.collection('usuarios/${auth.usuario!.uid}/dados');
+    // var result = await collection.get();
     // String nome2;
     // for (var doc in result.docs) {
     //   var nome = doc.data().toString().contains('nome') ? doc.get('nome') : '';
@@ -34,7 +34,7 @@ class HomeController extends ChangeNotifier {
     // }
     // teste = ;
     // }
-    return result;
+    // return result;
   }
 
   var currentPage = 0;
@@ -44,8 +44,6 @@ class HomeController extends ChangeNotifier {
   }
 
   Future<String> favoritas() async {
-    var agora = readFavoritas();
-
     return "";
   }
 }

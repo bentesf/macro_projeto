@@ -17,7 +17,7 @@ void main() async {
     providers: [
       ChangeNotifierProvider(create: (context) => AuthController()),
       ChangeNotifierProvider(
-        create: (context) => ContactDao(auth: context.read<AuthController>()),
+        create: (context) => ContactDao(),
       ),
       ChangeNotifierProvider(
         create: (context) => HomeController(),

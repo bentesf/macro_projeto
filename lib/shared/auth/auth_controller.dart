@@ -50,7 +50,7 @@ class AuthController extends ChangeNotifier {
       _getUser();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        throw AuthException('Email não encontrado. Cadastre-se.');
+        throw AuthException('Conta não registrada.');
       } else if (e.code == 'wrong-password') {
         throw AuthException('Senha incorreta. Tente novamente');
       }

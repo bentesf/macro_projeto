@@ -1,21 +1,24 @@
 class Usuario {
-  final String nome;
-  final String perfil;
+  final String descri;
+  final String area;
+  final String cap;
 
   Usuario(
-    this.nome,
-    this.perfil,
+    this.descri,
+    this.area,
+    this.cap,
   );
 
   Map<String, dynamic> toMap() {
     return {
-      'nome': nome,
-      'perfil': perfil,
+      'descri': descri,
+      'area': area,
+      'cap': cap,
     };
   }
 
   factory Usuario.fromMap(Map<String, dynamic> map) {
-    return Usuario(map['nome'], map['perfil']);
+    return Usuario(map['descri'], map['area'], map['cap']);
   }
 
   factory Usuario.fromJson(Map<String, dynamic> json) => Usuario.fromMap(json);

@@ -6,11 +6,11 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // AuthService auth = 
+    // AuthService auth =
     // final authController = AuthController();
     // authController.currentUser(context);
     return MaterialApp(
-      title: 'Cripto Moedas',
+      title: 'Macro Projeto',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.indigo,

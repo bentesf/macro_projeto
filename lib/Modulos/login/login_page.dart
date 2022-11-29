@@ -21,11 +21,11 @@ class _LoginPageState extends State<LoginPage> {
   final controller = LoginController();
   bool isLogin = true;
   late String titulo;
-   late String actionButton;
+  late String actionButton;
   late String toggleButton;
   bool loading = false;
-  
-    @override
+
+  @override
   void initState() {
     super.initState();
     setFormAction(true);
@@ -37,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
       if (isLogin) {
         titulo = 'Bem vindo';
         actionButton = "Login";
-        toggleButton = 'Ainda não tem conta? Cadastre-se agora.';
+        toggleButton = '';
       } else {
         titulo = 'Crie sua conta';
         actionButton = 'Cadastrar';
@@ -45,26 +45,33 @@ class _LoginPageState extends State<LoginPage> {
       }
     });
   }
-  
+
   login() async {
     setState(() => loading = true);
     try {
-      await context.read<AuthController>().login(ctrlLogin.text, ctrlSenha.text);
+      await context
+          .read<AuthController>()
+          .login(ctrlLogin.text, ctrlSenha.text);
     } on AuthException catch (e) {
       setState(() => loading = false);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.message)));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.message)));
     }
   }
+
   registrar() async {
     setState(() => loading = true);
     try {
-      await context.read<AuthController>().registrar(ctrlLogin.text, ctrlSenha.text);
+      await context
+          .read<AuthController>()
+          .registrar(ctrlLogin.text, ctrlSenha.text);
     } on AuthException catch (e) {
       setState(() => loading = false);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.message)));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.message)));
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -139,17 +146,16 @@ class _LoginPageState extends State<LoginPage> {
                         obscureText: true,
                       ),
                       ElevatedButton(
-                          style: style,
-                          onPressed: () async {
-                      if (isLogin) {
-                          login();
-                        } else {
-                          registrar();
-                        }
-                          },
-                     child: (loading)
-                          ? 
-                              const Padding(
+                        style: style,
+                        onPressed: () async {
+                          if (isLogin) {
+                            login();
+                          } else {
+                            registrar();
+                          }
+                        },
+                        child: (loading)
+                            ? const Padding(
                                 padding: EdgeInsets.all(16),
                                 child: SizedBox(
                                   width: 24,
@@ -159,40 +165,38 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                 ),
                               )
-                            
-                          : 
-                              // const Icon(Icons.check),
-                              Text(
-                            actionButton,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 30,
-                            ),
-                          )
-                              // Padding(
-                              //   padding: const EdgeInsets.all(16.0),
-                              //   child: Text(
-                              //     actionButton,
-                              //     style: const TextStyle(fontSize: 20),
-                              //   ),
-                              // ),
-                            ,
-                    ),
-                  
-                
-                TextButton(
-                  onPressed: () => setFormAction(!isLogin),
-                  child: Text(toggleButton),
-                ),
-                          // child: const Text(
-                          //   'Entrar',
-                          //   textAlign: TextAlign.center,
-                          //   style: TextStyle(
-                          //     color: Colors.white,
-                          //     fontSize: 30,
-                          //   ),
-                          // )),
+                            :
+                            // const Icon(Icons.check),
+                            Text(
+                                actionButton,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 30,
+                                ),
+                              )
+                        // Padding(
+                        //   padding: const EdgeInsets.all(16.0),
+                        //   child: Text(
+                        //     actionButton,
+                        //     style: const TextStyle(fontSize: 20),
+                        //   ),
+                        // ),
+                        ,
+                      ),
+
+                      TextButton(
+                        onPressed: () => setFormAction(!isLogin),
+                        child: Text(toggleButton),
+                      ),
+                      // child: const Text(
+                      //   'Entrar',
+                      //   textAlign: TextAlign.center,
+                      //   style: TextStyle(
+                      //     color: Colors.white,
+                      //     fontSize: 30,
+                      //   ),
+                      // )),
                     ],
                   ))
             ],

@@ -25,6 +25,7 @@ class _FormScreenState extends State<FormScreen> {
   TextEditingController impucontroller = TextEditingController();
   TextEditingController cascontroller = TextEditingController();
   TextEditingController concecontroller = TextEditingController();
+  TextEditingController localcontroller = TextEditingController();
   List<Produto> produtos = [];
 
   final controller = FormController();
@@ -46,11 +47,6 @@ class _FormScreenState extends State<FormScreen> {
             child: Container(
               height: 650,
               width: 375,
-              // decoration: BoxDecoration(
-              //   color: Colors.black12,
-              //   borderRadius: BorderRadius.circular(10),
-              //   border: Border.all(width: 3),
-              // ),
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -168,7 +164,7 @@ class _FormScreenState extends State<FormScreen> {
                       child: TextFormField(
                         validator: (String? value) {
                           if (controller.valueTipo(value)) {
-                            return 'Informe o Tipo';
+                            return 'Informe o Armazenamento';
                           }
                           return null;
                         },
@@ -176,8 +172,8 @@ class _FormScreenState extends State<FormScreen> {
                         textAlign: TextAlign.center,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
-                          hintText: 'Tipo Produto',
-                          labelText: 'Tipo Produto',
+                          hintText: 'Armazenamento',
+                          labelText: 'Armazenamento',
                           fillColor: Colors.white70,
                           filled: true,
                         ),
@@ -267,6 +263,26 @@ class _FormScreenState extends State<FormScreen> {
                         ),
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        validator: (String? value) {
+                          if (controller.valueConc(value)) {
+                            return 'Insira a Area';
+                          }
+                          return null;
+                        },
+                        controller: localcontroller,
+                        textAlign: TextAlign.center,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Local',
+                          labelText: 'Local',
+                          fillColor: Colors.white70,
+                          filled: true,
+                        ),
+                      ),
+                    ),
                     ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
@@ -282,6 +298,7 @@ class _FormScreenState extends State<FormScreen> {
                             impucontroller.text,
                             cascontroller.text,
                             concecontroller.text,
+                            localcontroller.text,
                           ));
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
